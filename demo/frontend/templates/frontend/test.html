@@ -9,8 +9,9 @@
 
     {% load static %}
     <script src="{% static 'frontend/jquery-3.2.1.min.js' %}"></script>
-    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
-    <script src="{% static 'frontend/jquery.cookie.js' %}"></script>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js" type="text/javascript" ></script>
+    <script src="{% static 'frontend/jquery.cookie.js' %}" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css">
     
     <script type="text/javascript">
         
@@ -20,7 +21,7 @@
         {
             // context.drawImage(video, 0, 0, 480, 320);
             //这里的0, 0参数画布上的坐标点，图片将会拷贝到这个地方。
-            context.drawImage(video, 0, 0, 480, 320);
+            context.drawImage(video, 0, 0, 720, 405);
             image = canvas.toDataURL("image/png");
         };
         
@@ -51,17 +52,25 @@
             <embed id="tts_embed_id" height="0" width="0" src="">
         </audio>
     </div>
-    <video id="video" width="480" height="320" controls>
-    </video>
-    <div>
-        <button id="capture" onclick="pic()">拍照</button>
-        <button id="picupload" onclick="update()">上传</button>
+    <div style="width:480; height:320; " class="card card-body embed-responsive embed-responsive-16by9 media media-body container">
+        <video id="video" width="480" height="320" controls></video>
+    </div>
+    <div class="d-flex flex-row container">
+        <div class="p-2">
+        <button id="capture" class="btn btn-secondary btn-lg " onclick="pic()">拍照</button>
+        </div>
+        <div class="p-2">
+        <button id="picupload" class="btn btn-secondary btn-lg" onclick="update()">上传</button>
+    </div>
     </div>
     <div align="right" >
         <label id = "information" style="white-space: pre-line;vertical-align:middle;" ></label>
     </div>
-
-    <canvas id="canvas" width="480" height="320"></canvas>
+    <div style="border:1px;" class="media media-body container">
+        <canvas style="border-color: springgreen;
+        border-style: solid;
+    " id="canvas" width="720" height="405"></canvas>
+    </div>
 
     <script>
         //访问用户媒体设备的兼容方法
@@ -107,6 +116,9 @@
             alert('不支持访问用户媒体');
         }
     </script>
+        <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 
 </body>
 </html>

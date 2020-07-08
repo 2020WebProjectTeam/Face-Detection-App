@@ -19,10 +19,15 @@ export class Header extends Component {
       <span className="navbar-text mr-3">
         <strong>{user ? `Welcome ${user.username}` : ""}</strong>
       </span>
-      <div class="btn-group" role="group" aria-label="Basic example">
+      <div className="btn-group" role="group" aria-label="Basic example">
       <li className="nav-item">
         <a href="/app/upload/image/">
           <button className="nav-link btn btn-success text-light btn-sm"> Upload Image</button>
+        </a>
+      </li>
+      <li className="nav-item">
+        <a href="/app/camera/">
+          <button className="nav-link btn btn-primary text-light btn-sm"> Take Image</button>
         </a>
       </li>
       <li className="nav-item">

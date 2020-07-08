@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css">
     <title>人脸特征值识别</title>
     {% load static %}
     <script>
@@ -43,22 +44,36 @@
         </audio>
     </div>
 
-    <label style="color: red">{{ error_msg }}</label>
+    <label>{{ error_msg }}</label>
     <br>
-
-    <label id="l1" style="color: blue">{{ success_msg }}</label><br>
-    <label id="l2" style="color: blue">{{ age }}</label><br>
-    <label id="l3" style="color: blue">{{ expression }}</label><br>
-    <label id="l4" style="color: blue">{{ gender }}</label><br>
-    <label id="l5" style="color: blue">{{ glasses }}</label><br>
-    <label id="l6" style="color: blue">{{ beauty }}</label><br>
-
-    <!-- 让图片回显 -->
-    {% if picurl %}
-    {{ picurl }}
-        <img src="{% static  picurl %}">
-    {% endif %}
-
-    <button id="tts_btn" onclick="speak()">语音播报</button>
+    <div class="container" style="align-items: center; justify-content: center;">
+    <div class="card" style="width: 18rem; text-align: center;margin:auto; ">
+        
+        <!-- 让图片回显 -->
+        {% if picurl %}
+            <img class="card-img-top" src="{% static  picurl %}">
+        {% endif %}
+        <div class="card-body">
+        <h5 id="l1" class="card-title">{{ success_msg }}</h5>
+        <ul class="list-group list-group-flush">
+            <li  id="l2" class="list-group-item">{{age}}</li>
+            <li  id="l3" class="list-group-item">{{expression}}</li>
+            <li id="l4" class="list-group-item">{{ gender }}</li>
+            <li id="l5" class="list-group-item">{{ glasses }}</li>
+            <li id="l6" class="list-group-item">{{ beauty }}</li>
+        </ul>
+        </div>
+    </div>
+    </div>  
+    <div class="d-flex flex-column" style="margin-top: 50px;">
+        <button style="margin:auto;" class="btn btn-lg btn-outline-success p-4" id="tts_btn" onclick="speak()">语音播报</button>
+        <a style="margin:auto;" href="/app/">
+            <button  class="btn btn-lg btn-outline-success p-4"  id="tts_btn">返回主页</button>
+        </a>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 </body>
 </html>
