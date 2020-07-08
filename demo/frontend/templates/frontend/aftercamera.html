@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>人脸特征值识别</title>
+    {% load static %}
+    <script>
+        function speak() {
+            var ttsDiv = document.getElementById('bdtts_div_id');
+            var ttsAudio = document.getElementById('tts_autio_id');
+            var Text1 = document.getElementById('l1').innerHTML;
+            var Text2 = document.getElementById('l2').innerHTML;
+            var Text3 = document.getElementById('l3').innerHTML;
+            var Text4 = document.getElementById('l4').innerHTML;
+            var Text5 = document.getElementById('l5').innerHTML;
+            var Text6 = document.getElementById('l6').innerHTML;
+
+            var sum = Text1 +'。'+ Text2 +'。'+ Text3 +'。' + Text4 +'。' + Text5 +'。' + Text6;
+            // 文字转语音
+            ttsDiv.removeChild(ttsAudio);
+            var au1 = '<audio id="tts_autio_id" autoplay="autoplay">';
+            var sss = '<source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&per=3&spd=5&text=' +sum + '" type="audio/mpeg">';
+            var eee = '<embed id="tts_embed_id" height="0" width="0" src="">';
+            var au2 = '</audio>';
+            ttsDiv.innerHTML = au1 + sss + eee + au2;
+
+            ttsAudio = document.getElementById('tts_autio_id');
+
+            ttsAudio.play();
+        }
+    </script>
+</head>
+
+<body>
+    <h1 style="text-align: center">人脸图片上传</h1>
+
+    <div id="bdtts_div_id">
+        <audio id="tts_autio_id" autoplay="autoplay">
+          <source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&per=1&text" type="audio/mpeg">
+          <embed id="tts_embed_id" height="0" width="0" src="">
+        </audio>
+    </div>
+
+    <label style="color: red">{{ error_msg }}</label>
+    <br>
+
+    <label id="l1" style="color: blue">{{ success_msg }}</label><br>
+    <label id="l2" style="color: blue">{{ age }}</label><br>
+    <label id="l3" style="color: blue">{{ expression }}</label><br>
+    <label id="l4" style="color: blue">{{ gender }}</label><br>
+    <label id="l5" style="color: blue">{{ glasses }}</label><br>
+    <label id="l6" style="color: blue">{{ beauty }}</label><br>
+
+    <!-- 让图片回显 -->
+    {% if picurl %}
+    {{ picurl }}
+        <img src="{% static  picurl %}">
+    {% endif %}
+
+    <button id="tts_btn" onclick="speak()">语音播报</button>
+</body>
+</html>

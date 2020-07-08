@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css">
+    <title>人脸特征值识别</title>
+    {% load static %}
+    <script>
+        function speak() {
+            var ttsDiv = document.getElementById('bdtts_div_id');
+            var ttsAudio = document.getElementById('tts_autio_id');
+            var Text1 = document.getElementById('l1').innerHTML;
+            var Text2 = document.getElementById('l2').innerHTML;
+            var Text3 = document.getElementById('l3').innerHTML;
+            var Text4 = document.getElementById('l4').innerHTML;
+            var Text5 = document.getElementById('l5').innerHTML;
+            var Text6 = document.getElementById('l6').innerHTML;
+
+            var sum = Text1 +'。'+ Text2 +'。'+ Text3 +'。' + Text4 +'。' + Text5 +'。' + Text6;
+            // 文字转语音
+            ttsDiv.removeChild(ttsAudio);
+            var au1 = '<audio id="tts_autio_id" autoplay="autoplay">';
+            var sss = '<source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&per=3&spd=5&text=' +sum + '" type="audio/mpeg">';
+            var eee = '<embed id="tts_embed_id" height="0" width="0" src="">';
+            var au2 = '</audio>';
+            ttsDiv.innerHTML = au1 + sss + eee + au2;
+
+            ttsAudio = document.getElementById('tts_autio_id');
+
+            ttsAudio.play();
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Content here -->
+      
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">上传图片</a>
+      </nav>
+      <div class="media">
+      <img class="mr-3" src="{% static "frontend/Mona-lisa-test.jpg" %}" alt="Mona lIsa" >
+      </div>
+    <div class="card card-body mt-4 mb-4">
+        <form action="/app/upload/image/" method="post" enctype="multipart/form-data">
+
+            {% csrf_token %}
+            <div class="custom-file">
+                <input name="image" type="file" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+            <button class="btn btn-primary" type="submit">上传</button>
+        </form>
+    </div>
+    <input class="btn btn-primary" type="button" id="tts_btn" onclick="speak()" value="语音播报" />
+    
+
+    <div id="bdtts_div_id">
+        <audio id="tts_autio_id" autoplay="autoplay">
+          <source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&per=1&text" type="audio/mpeg">
+          <embed id="tts_embed_id" height="0" width="0" src="">
+        </audio>
+    </div>
+
+    <label style="color: red">{{ error_msg }}</label>
+    <br>
+
+    <label id="l1" style="color: blue">{{ success_msg }}</label><br>
+    <label id="l2" style="color: blue">{{ age }}</label><br>
+    <label id="l3" style="color: blue">{{ expression }}</label><br>
+    <label id="l4" style="color: blue">{{ gender }}</label><br>
+    <label id="l5" style="color: blue">{{ glasses }}</label><br>
+    <label id="l6" style="color: blue">{{ beauty }}</label><br>
+
+    <!-- 让图片回显 -->
+    {% if picurl %}
+        <img class="align-self-center mr-3" src="{% static "frontend/"|add:picurl %}">
+    {% endif %}
+</div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>摄像头拍照</title>
+
+    {% load static %}
+    <script src="{% static 'frontend/jquery-3.2.1.min.js' %}"></script>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="{% static 'frontend/jquery.cookie.js' %}"></script>
+    
+    <script type="text/javascript">
+        
+        var image = ''
+        
+        function pic()
+        {
+            // context.drawImage(video, 0, 0, 480, 320);
+            //这里的0, 0参数画布上的坐标点，图片将会拷贝到这个地方。
+            context.drawImage(video, 0, 0, 480, 320);
+            image = canvas.toDataURL("image/png");
+        };
+        
+        function update() {
+            $.ajax({
+                headers: {"X-CSRFToken": $.cookie("csrftoken")},
+                url: "/app/camera/",
+                type: "POST",
+                traditional: true,
+                data: {"image":image},
+                contentType: "application/x-www-form-urlencoded",
+                success: function (data) {
+                    window.location.href = "/app/upload/"
+                }
+            })
+        }
+    </script>
+    
+
+</head>
+<body>
+    <div>
+        <input type="button" id="tts_btn" onclick="doTTS()" value="播放" />
+    </div>
+    <div id="bdtts_div_id">
+        <audio id="tts_autio_id" autoplay="autoplay">
+            <source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&amp;ie=UTF-8&amp;spd=8&amp;per=1&amp;text=请输入文字" type="audio/mpeg">
+            <embed id="tts_embed_id" height="0" width="0" src="">
+        </audio>
+    </div>
+    <video id="video" width="480" height="320" controls>
+    </video>
+    <div>
+        <button id="capture" onclick="pic()">拍照</button>
+        <button id="picupload" onclick="update()">上传</button>
+    </div>
+    <div align="right" >
+        <label id = "information" style="white-space: pre-line;vertical-align:middle;" ></label>
+    </div>
+
+    <canvas id="canvas" width="480" height="320"></canvas>
+
+    <script>
+        //访问用户媒体设备的兼容方法
+        function getUserMedia(constraints, success, error) {
+            if (navigator.mediaDevices.getUserMedia) {
+            //最新的标准API
+            navigator.mediaDevices.getUserMedia(constraints).then(success).catch(error);
+            } else if (navigator.webkitGetUserMedia) {
+            //webkit核心浏览器
+            navigator.webkitGetUserMedia(constraints,success, error)
+            } else if (navigator.mozGetUserMedia) {
+            //firfox浏览器
+            navigator.mozGetUserMedia(constraints, success, error);
+            } else if (navigator.getUserMedia) {
+            //旧版API
+            navigator.getUserMedia(constraints, success, error);
+            }
+        }
+
+        let video = document.getElementById('video');
+        let canvas = document.getElementById('canvas');
+        let context = canvas.getContext('2d');
+
+        function success(stream) {
+            //兼容webkit核心浏览器
+            let CompatibleURL = window.URL || window.webkitURL;
+            //将视频流设置为video元素的源
+            console.log(stream);
+
+            //video.src = CompatibleURL.createObjectURL(stream);
+            video.srcObject = stream;
+            video.play();
+        }
+
+        function error(error) {
+            console.log(`访问用户媒体设备失败${error.name}, ${error.message}`);
+        }
+
+        if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
+            //调用用户媒体设备, 访问摄像头
+            getUserMedia({video : {width: 480, height: 320}}, success, error);
+        } else {
+            alert('不支持访问用户媒体');
+        }
+    </script>
+
+</body>
+</html>

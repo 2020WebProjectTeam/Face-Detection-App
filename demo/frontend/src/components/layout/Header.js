@@ -19,9 +19,16 @@ export class Header extends Component {
       <span className="navbar-text mr-3">
         <strong>{user ? `Welcome ${user.username}` : ""}</strong>
       </span>
+      <div class="btn-group" role="group" aria-label="Basic example">
       <li className="nav-item">
-        <button className="nav-link btn btn-info btn-lg text-light" onClick={this.props.logout}>Logout</button>
+        <a href="/app/upload/image/">
+          <button className="nav-link btn btn-success text-light btn-sm"> Upload Image</button>
+        </a>
       </li>
+      <li className="nav-item">
+        <button className="nav-link btn btn-info text-light btn-sm" onClick={this.props.logout}>Logout</button>
+      </li>
+      </div>
       </>
     );
     const guestLinks = (

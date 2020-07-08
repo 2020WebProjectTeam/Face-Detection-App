@@ -68,8 +68,8 @@ class ImageViewSet(viewsets.ModelViewSet):
     """
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+    #                       IsOwnerOrReadOnly]
     
     def perform_create(self, serializer):
         serializer.save(customer=self.request.customer)
